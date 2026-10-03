@@ -11,6 +11,12 @@ enum DemoData {
         ProcessInfo.processInfo.arguments.contains("-demoData")
     }
 
+    /// `-skipHealthKit` keeps the real on-disk store but never talks to HealthKit — for
+    /// screenshots in the simulator with a store copied from a phone.
+    static var skipsHealthKit: Bool {
+        isEnabled || ProcessInfo.processInfo.arguments.contains("-skipHealthKit")
+    }
+
     /// `-openFirstWorkout`, or `-openWorkout 2` for the third newest.
     static var openedWorkoutIndex: Int? {
         if ProcessInfo.processInfo.arguments.contains("-openFirstWorkout") { return 0 }
@@ -32,6 +38,12 @@ enum DemoData {
     /// `-openExport` (with `-openReplay`) starts a 15 s video export straight away.
     static var opensExport: Bool {
         ProcessInfo.processInfo.arguments.contains("-openExport")
+    }
+
+    /// `-anonymize` shows the recording device as plain "Apple Watch" instead of
+    /// "<owner>'s Apple Watch", for public screenshots.
+    nonisolated static var anonymizes: Bool {
+        ProcessInfo.processInfo.arguments.contains("-anonymize")
     }
 
     /// `-exportFIT` exports the opened workout as .fit straight away.

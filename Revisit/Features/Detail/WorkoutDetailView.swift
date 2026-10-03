@@ -55,7 +55,7 @@ struct WorkoutDetailView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(record.startDate.formatted(date: .complete, time: .shortened))
                             .foregroundStyle(.secondary)
-                        Text(record.sourceName)
+                        Text(record.displaySourceName)
                             .font(.footnote)
                             .foregroundStyle(.tertiary)
                     }
@@ -100,10 +100,14 @@ struct WorkoutDetailView: View {
             case .pending:
                 await sync.processRoute(for: record)
             case .ready:
-                if visualization == nil, let track = record.loadTrack() {
+                guard visualization == nil else { break }
+                if let track = record.loadTrack() {
                     let loaded = RouteVisualization(track: track)
                     visualization = loaded
                     mapContent = loaded.mapContent(coloredBy: metric)
+                } else {
+                    // Cached track missing or unreadable: rebuild it from HealthKit.
+                    record.routeStatus = .pending
                 }
             case .none, .failed:
                 break

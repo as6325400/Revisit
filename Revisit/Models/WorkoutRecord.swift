@@ -67,6 +67,14 @@ final class WorkoutRecord {
         isIndoor ? "室內" + kind.displayName : kind.displayName
     }
 
+    /// The device that recorded the workout, e.g. "王小明的 Apple Watch".
+    var displaySourceName: String {
+        #if DEBUG
+        if DemoData.anonymizes { return "Apple Watch" }
+        #endif
+        return sourceName
+    }
+
     /// Indoor workouts and pool swims never have a route.
     var hasNoRouteByNature: Bool {
         isIndoor || kind == .poolSwimming

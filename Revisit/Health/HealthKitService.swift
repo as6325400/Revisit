@@ -7,7 +7,7 @@ final class HealthKitService {
 
     var isAvailable: Bool {
         #if DEBUG
-        if DemoData.isEnabled { return false }
+        if DemoData.skipsHealthKit { return false }
         #endif
         return HKHealthStore.isHealthDataAvailable()
     }

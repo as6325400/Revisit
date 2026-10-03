@@ -36,6 +36,11 @@ final class AppModel {
             if let index = DemoData.openedWorkoutIndex, ids.indices.contains(index) {
                 router.openWorkout(ids[index])
             }
+        } else if let index = DemoData.openedWorkoutIndex {
+            let newestFirst = FetchDescriptor<WorkoutRecord>(sortBy: [SortDescriptor(\.startDate, order: .reverse)])
+            if let records = try? container.mainContext.fetch(newestFirst), records.indices.contains(index) {
+                router.openWorkout(records[index].workoutID)
+            }
         }
         #endif
     }

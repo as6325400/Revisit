@@ -46,10 +46,13 @@ private struct MetricChart: View {
         metric == .pace && style != .kilometersPerHour
     }
 
+    /// Bottom of the filled area: a little below the lowest value, but never below zero
+    /// for values that can't be negative (speed, heart rate).
     private var baseline: Double {
         let values = points.map(\.value)
         guard let low = values.min(), let high = values.max() else { return 0 }
-        return low - max((high - low) * 0.1, 1)
+        let padded = low - max((high - low) * 0.1, 1)
+        return low >= 0 ? max(0, padded) : padded
     }
 
     private var tint: Color {
