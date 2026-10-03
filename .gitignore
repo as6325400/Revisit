@@ -1,0 +1,18 @@
+# Xcode
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.moved-aside
+.swiftpm/
+.build/
+
+# macOS
+.DS_Store
+
+# Local secrets (Mapbox token)
+Config/Secrets.xcconfig
+
+# Private development notes
+docs/PLAN.md

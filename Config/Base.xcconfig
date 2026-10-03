@@ -1,0 +1,11 @@
+// Shared build settings for all targets.
+
+// Signing. These are the project owner's values; anyone else building the app must use
+// their own Apple Developer team and a bundle ID prefix they control (bundle IDs are
+// unique across all of Apple), set in Secrets.xcconfig or passed to scripts/install.sh.
+REVISIT_DEVELOPMENT_TEAM = J4Z85R8W3G
+REVISIT_BUNDLE_ID_PREFIX = org.as6325400
+
+// Secrets.xcconfig is git-ignored and overrides the values above; copy
+// Secrets.example.xcconfig to create it.
+#include? "Secrets.xcconfig"
