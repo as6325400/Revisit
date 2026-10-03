@@ -47,6 +47,10 @@ final class ReplayVideoExporter {
         guard writer.startWriting() else { throw writer.error ?? ExportError.writerFailed }
         writer.startSession(atSourceTime: .zero)
 
+        // Before the style loads, camera changes are only queued and snapshots would show
+        // the default world view.
+        await renderer.waitUntilReady()
+
         let fps = Double(Self.framesPerSecond)
         let movingFrames = max(2, Int(duration * fps))
         let totalFrames = movingFrames + Int(Self.holdSeconds * fps)

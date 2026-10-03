@@ -94,6 +94,15 @@ final class MapboxReplayRenderer: ReplayRendering {
 
     // MARK: Export
 
+    /// Waits until the style has loaded and the view has a size, so camera changes take
+    /// effect instead of being queued. Gives up after `timeout`.
+    func waitUntilReady(timeout: Duration = .seconds(15)) async {
+        let deadline = ContinuousClock.now + timeout
+        while !(isStyleReady && mapView.bounds.height > 0), ContinuousClock.now < deadline, !Task.isCancelled {
+            try? await Task.sleep(for: .milliseconds(50))
+        }
+    }
+
     /// Waits until the map has finished loading and drawing the current camera,
     /// or until `timeout`, whichever comes first.
     func waitUntilIdle(timeout: Duration) async {
